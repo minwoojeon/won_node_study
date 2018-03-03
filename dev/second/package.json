@@ -1,0 +1,15 @@
+{
+  "name": "second",
+  "version": "1.0.0",
+  "description": "node web login",
+  "main": "app.js",
+  "scripts": {
+    "test": "won"
+  },
+  "author": "won",
+  "license": "ISC",
+  "dependencies": {
+    "connect-redis": "^3.3.3",
+    "express-session": "^1.15.6"
+  }
+}
