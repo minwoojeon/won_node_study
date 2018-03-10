@@ -1,0 +1,25 @@
+{
+  "name": "third",
+  "version": "1.0.0",
+  "description": "node mysql login",
+  "main": "index.js",
+  "scripts": {
+    "test": "longinmysql"
+  },
+  "keywords": [
+    "node",
+    "passport"
+  ],
+  "author": "won",
+  "license": "ISC",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cookie-session": "^2.0.0-beta.3",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-ejs-layouts": "^2.3.1",
+    "mysql": "^2.15.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  }
+}
