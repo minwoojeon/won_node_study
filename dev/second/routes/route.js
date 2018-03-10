@@ -1,26 +1,57 @@
-const express = require('express');
-const router = express.Router();
-　
-const mysql = require('mysql');
-const connection = mysql.createConnection(require('../config/dbconfig.js'));
-　
-connection.connect((err) => {
-    if(err) {
-        console.log(err);
-        return;
-    }
-    console.log( 'mysql connect completed' );
-});
+module.exports = function(app, passport) {
+	app.get('/', function(req, res) {
+		res.render('index.ejs');
+	});
 
-router.get('/',async (req, res) => {
-    const sql = 'SELECT * FROM test_users';
-    let results = await connection.query(sql, (err, results, field) => {
-        console.log(results); // 배열 형태로 결과가 떨어짐
-    })
-    res.render('index', {
-        layout: false, // express-ejs-layouts는 기본으로 layout.ejs가 설정되어야 하는데 이를 사용하지 않을 경우
-        test: results
-    })
-});
-　
-module.exports = router;
+	app.get('/login', function(req, res) {//로그인
+		res.render('login.ejs', { message: req.flash('loginMessage') });
+	});
+
+	app.post('/login', passport.authenticate('local-login', { // 로그인 처리
+            successRedirect : '/profile',
+            failureRedirect : '/login',
+            failureFlash : true
+		}),
+        function(req, res) {
+            console.log("hello");
+
+            if (req.body.remember) {
+              req.session.cookie.maxAge = 1000 * 60 * 3;
+            } else {
+              req.session.cookie.expires = false;
+            }
+        res.redirect('/');
+    });
+
+	app.get('/signup', function(req, res) {
+		res.render('signup.ejs', { message: req.flash('signupMessage') });
+	});
+
+	app.post('/signup', passport.authenticate('local-signup', {//회원가입 처리
+		successRedirect : '/profile',
+		failureRedirect : '/signup',
+		failureFlash : true
+	}));
+
+//회원상태 확인
+	app.get('/profile', isLoggedIn, function(req, res) {
+		res.render('profile.ejs', {
+			user : req.user
+		});
+	});
+
+//로그아웃 처리
+	app.get('/logout', function(req, res) {
+		req.logout();
+		res.redirect('/');
+	});
+};
+
+// 로그인 상태확인
+function isLoggedIn(req, res, next) {
+
+	if (req.isAuthenticated())
+		return next();
+
+	res.redirect('/');
+}
