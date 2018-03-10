@@ -4,7 +4,8 @@
   "description": "node web login",
   "main": "app.js",
   "scripts": {
-    "test": "won"
+    "test": "won",
+    "start": "node app.js"
   },
   "author": "won",
   "license": "ISC",

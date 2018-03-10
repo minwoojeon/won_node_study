@@ -28,6 +28,14 @@ const users = [
 ]
 const findUser = (user_id, user_pwd) => {
     // id와 password가 일치하는 유저 찾는 함수, 없으면 undefined 반환
+    console.log(user_id);
+    console.log(user_pwd);
+    test.forEach((item) => {
+      item.id
+      item.pw
+      item.nick
+    });
+    console.log(test);
     return users.find( v => (v.user_id === user_id && v.user_pwd === user_pwd) );
 }
 const findUserIndex = (user_id, user_pwd) => {
@@ -71,6 +79,7 @@ app.post('/join', (req, res) => {
 
 app.post('/login', (req, res) => {
     const body = req.body; // body-parser 사용
+    console.log(req)
     if( findUser( body.user_id, body.user_pwd ) ) {
     // 해당유저가 존재한다면
         req.session.user_uid = findUserIndex( body.user_id, body.user_pwd ); //유니크한 값 유저 색인 값 저장
